@@ -7,9 +7,9 @@ import java.util.Date;
  */
 
 public class TempData {
-    private int low;
-    private int high;
-    private Date mDate;
+    private int low;//最低温
+    private int high;//最高温
+    private Date mDate;//日期
 
     public TempData(){}
 
