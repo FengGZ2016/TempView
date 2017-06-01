@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -71,7 +72,24 @@ public class DrawView extends View{
      * 画线
      * */
     private void drawLine(Canvas canvas) {
-
+        Path lowPath = new Path();
+        Path highPath = new Path();
+        for(int i=0; i<mTempBeanList.size(); i++){
+            TempBean bean = mTempBeanList.get(i);
+            if(i==0){
+                lowPath.moveTo(bean.getX(),bean.getLowY());
+                highPath.moveTo(bean.getX(),bean.getHighY());
+            }else {
+                lowPath.lineTo(bean.getX(),bean.getLowY());
+                highPath.lineTo(bean.getX(),bean.getHighY());
+            }
+        }
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(5);
+        paint.setColor(Color.GREEN);
+        canvas.drawPath(lowPath, paint);
+        paint.setColor(Color.RED);
+        canvas.drawPath(highPath, paint);
     }
 
     /**
