@@ -2,6 +2,8 @@ package com.example.administrator.tempview;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -17,6 +19,7 @@ public class DrawView extends View{
     private List<TempData> mTempDataList=new ArrayList<>();
     private List<TempBean> mTempBeanList=new ArrayList<>();
     private final int RADIU=10;//半径
+    private Paint paint=new Paint();//画笔
 
     public DrawView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -30,8 +33,8 @@ public class DrawView extends View{
     private void initBean() {
         for (int i=0;i<mTempDataList.size();i++){
             int x = 50 + (i*150);
-            int lowY = (40-(mTempDataList.get(i).getLow()))*RADIU;
-            int highY=(40-(mTempDataList.get(i).getHigh()))*RADIU;
+            int lowY = (40-(mTempDataList.get(i).getLow()))*10;
+            int highY=(40-(mTempDataList.get(i).getHigh()))*10;
             TempBean bean=new TempBean(x,lowY,highY);
             mTempBeanList.add(bean);
         }
@@ -60,5 +63,29 @@ public class DrawView extends View{
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        drawCircle(canvas);
+        drawLine(canvas);
+    }
+
+    /**
+     * 画线
+     * */
+    private void drawLine(Canvas canvas) {
+
+    }
+
+    /**
+     * 画点
+     * */
+    private void drawCircle(Canvas canvas) {
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        for(int i=0;i<mTempBeanList.size(); i++) {
+            TempBean bean = mTempBeanList.get(i);
+            paint.setColor(Color.GREEN);
+            canvas.drawCircle(bean.getX(),bean.getLowY(),RADIU,paint);
+            paint.setColor(Color.RED);
+           canvas.drawCircle(bean.getX(),bean.getHighY(),RADIU,paint);
+
+        }
     }
 }
